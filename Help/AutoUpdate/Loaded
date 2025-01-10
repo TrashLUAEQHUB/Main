@@ -7,6 +7,8 @@ local G2L = {};
 -- StarterGui.Operator
 G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
 G2L["1"]["Name"] = [[Operator]];
+G2L["1"]["ResetOnSpawn"] = false;
+G2L["1"]["SelectionGroup"] = true;
 
 -- StarterGui.Operator.Loading-Frame
 G2L["2"] = Instance.new("Frame", G2L["1"]);
@@ -134,14 +136,14 @@ G2L["10"]["BorderSizePixel"] = 0;
 G2L["10"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
 G2L["10"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 G2L["10"]["TextTransparency"] = 0.699999988079071;
-G2L["10"]["TextSize"] = 14;
+G2L["10"]["TextSize"] = 12;
 G2L["10"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["10"]["Size"] = UDim2.new(0, 92, 0, 39);
+G2L["10"]["Size"] = UDim2.new(0, 44, 0, 39);
 G2L["10"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 G2L["10"]["Text"] = [[CREDIT BY EQ  HUB]];
 G2L["10"]["Name"] = [[Credit]];
 G2L["10"]["BackgroundTransparency"] = 1;
-G2L["10"]["Position"] = UDim2.new(0, 0, 0.8757577538490295, 0);
+G2L["10"]["Position"] = UDim2.new(0.038142621517181396, 0, 0.8757577538490295, 0);
 
 -- StarterGui.Operator.MainUI.Tab-Change.Tab-Scripts-Change
 G2L["11"] = Instance.new("TextButton", G2L["d"]);
@@ -857,7 +859,7 @@ local script = G2L["37"];
 	local dragStart = nil
 	local starPos = nil
 	local t = 0.6
-	
+	--=[Funtion]=--
 	local function updateInput(input)
 		local delta = input.Position - dragStart
 		local position = UDim2.new(starPos.X.Scale, starPos.X.Offset + delta.X, starPos.Y.Scale, starPos.Y.Offset + delta.Y)
@@ -893,6 +895,7 @@ local script = G2L["37"];
 			end
 		end
 	end)
+	--=[End]=--
 end;
 task.spawn(C_37);
 -- StarterGui.Operator.WarningFrame.Question.Answer - yes.Answer
