@@ -1,6 +1,3 @@
-local function Start()
-	
-
 local G2L = {};
 
 -- StarterGui.Operator
@@ -1194,7 +1191,7 @@ task.spawn(C_2c);
 local function C_2e()
 local script = G2L["2e"];
 	script.Parent.MouseButton1Up:Connect(function()
-		loadstring(game:HttpGet('https://raw.githubusercontent.com/DarkNetworks/Infinite-Yield/main/latest.lua'))()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
 	end)
 end;
 task.spawn(C_2e);
@@ -1481,6 +1478,8 @@ task.spawn(C_4c);
 local function C_4e()
 local script = G2L["4e"];
 	
+	--=[ Load ]=--
+	
 	local g = script.Parent.Parent
 	
 	--=[ Save Script ]=--
@@ -1502,6 +1501,8 @@ local script = G2L["4e"];
 		local e6 = ps["Tab-Change"]["Tab-Theme-Change"]
 		local e7 = ps["Tab-Change"]["Tab-Welcome-Change"]
 		local e8 = ps.Title
+		local e9 = ps["Tab-Change"]["Tab-Teach-Change"]
+	
 		e8.TextColor3 = BrickColor.new("Really red").Color
 		e.BackgroundColor3 = BrickColor.new("Really red").Color
 		e2.BackgroundColor3 = BrickColor.new("Really red").Color
@@ -1510,6 +1511,7 @@ local script = G2L["4e"];
 		e5.BorderColor3 = BrickColor.new("Really red").Color
 		e6.BorderColor3 = BrickColor.new("Really red").Color
 		e7.BorderColor3 = BrickColor.new("Really red").Color
+		e9.BorderColor3 = BrickColor.new("Really red").Color
 	
 	elseif p == false then
 	end
@@ -1529,6 +1531,13 @@ local script = G2L["4e"];
 		local e6 = ps["Tab-Change"]["Tab-Theme-Change"]
 		local e7 = ps["Tab-Change"]["Tab-Welcome-Change"]
 		local e8 = ps.Title
+		local e9 = ps["Tab-Change"]["Tab-Teach-Change"]
+	
+	
+	
+	
+	
+	
 		e8.TextColor3 = BrickColor.new("White").Color
 		e.BackgroundColor3 = BrickColor.new("White").Color
 		e2.BackgroundColor3 = BrickColor.new("White").Color
@@ -1537,6 +1546,7 @@ local script = G2L["4e"];
 		e5.BorderColor3 = BrickColor.new("White").Color
 		e6.BorderColor3 = BrickColor.new("White").Color
 		e7.BorderColor3 = BrickColor.new("White").Color
+		e9.BorderColor3 = BrickColor.new("White").Color
 	
 	
 	
@@ -1562,6 +1572,8 @@ local script = G2L["4e"];
 		local e6 = ps["Tab-Change"]["Tab-Theme-Change"]
 		local e7 = ps["Tab-Change"]["Tab-Welcome-Change"]
 		local e8 = ps.Title
+		local e9 = ps["Tab-Change"]["Tab-Teach-Change"]
+	
 		e8.TextColor3 = BrickColor.new("Bright blue").Color
 		e.BackgroundColor3 = BrickColor.new("Bright blue").Color
 		e2.BackgroundColor3 = BrickColor.new("Bright blue").Color
@@ -1570,6 +1582,7 @@ local script = G2L["4e"];
 		e5.BorderColor3 = BrickColor.new("Bright blue").Color
 		e6.BorderColor3 = BrickColor.new("Bright blue").Color
 		e7.BorderColor3 = BrickColor.new("Bright blue").Color
+		e9.BorderColor3 = BrickColor.new("Bright blue").Color
 	
 	
 	
@@ -1601,6 +1614,7 @@ local script = G2L["4e"];
 		local e6 = ps["Tab-Change"]["Tab-Theme-Change"]
 		local e7 = ps["Tab-Change"]["Tab-Welcome-Change"]
 		local e8 = ps.Title
+		local e9 = ps["Tab-Change"]["Tab-Teach-Change"]
 		e8.TextColor3 = BrickColor.new("Lime green").Color
 		e.BackgroundColor3 = BrickColor.new("Lime green").Color
 		e2.BackgroundColor3 = BrickColor.new("Lime green").Color
@@ -1609,6 +1623,7 @@ local script = G2L["4e"];
 		e5.BorderColor3 = BrickColor.new("Lime green").Color
 		e6.BorderColor3 = BrickColor.new("Lime green").Color
 		e7.BorderColor3 = BrickColor.new("Lime green").Color
+		e9.BorderColor3 = BrickColor.new("Lime green").Color
 	
 	elseif q == false then
 	end
@@ -1628,6 +1643,11 @@ local script = G2L["4e"];
 		local e6 = ps["Tab-Change"]["Tab-Theme-Change"]
 		local e7 = ps["Tab-Change"]["Tab-Welcome-Change"]
 		local e8 = ps.Title
+		local e9 = ps["Tab-Change"]["Tab-Teach-Change"]
+	
+	
+	
+	
 		e8.TextColor3 = BrickColor.new("Lime green").Color
 		e.BackgroundColor3 = BrickColor.new("Lime green").Color
 		e2.BackgroundColor3 = BrickColor.new("Lime green").Color
@@ -1636,6 +1656,7 @@ local script = G2L["4e"];
 		e5.BorderColor3 = BrickColor.new("Lime green").Color
 		e6.BorderColor3 = BrickColor.new("Lime green").Color
 		e7.BorderColor3 = BrickColor.new("Lime green").Color
+		e9.BorderColor3 = BrickColor.new("Lime green").Color
 	
 	
 	
@@ -1683,8 +1704,6 @@ local script = G2L["4e"];
 	
 	
 	--=[ https://raw.githubusercontent.com/TrashLUAEQHUB/Save/main/Theme/Gui/Help/Loaded ]=--
-	
-	 
 end;
 task.spawn(C_4e);
 -- StarterGui.Operator.WarningFrame.Question.Answer - yes.Answer
@@ -1818,9 +1837,3 @@ end;
 task.spawn(C_5f);
 
 return G2L["1"], require;
-end
-
-
---=[Start]=--
-
-Start()
