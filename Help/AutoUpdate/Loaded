@@ -6,8 +6,9 @@ local G2L = {};
 
 -- StarterGui.Operator
 G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
+G2L["1"]["IgnoreGuiInset"] = true;
+G2L["1"]["ScreenInsets"] = Enum.ScreenInsets.DeviceSafeInsets;
 G2L["1"]["Name"] = [[Operator]];
-G2L["1"]["ResetOnSpawn"] = false;
 G2L["1"]["SelectionGroup"] = true;
 
 -- StarterGui.Operator.Loading-Frame
@@ -736,12 +737,14 @@ task.spawn(C_18);
 local function C_1c()
 local script = G2L["1c"];
 	script.Parent.MouseButton1Up:Connect(function()
-		
-		local s = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+		local humanoidRootPart = game.Players.LocalPlayer.Character.HumanoidRootPart
+		local position = humanoidRootPart.Position  
 	
+		local positionString = position.X .. "," .. position.Y .. "," .. position.Z
 	
-		setclipboard(tostring(s)) 	
+		setclipboard(positionString)
 	end)
+	
 end;
 task.spawn(C_1c);
 -- StarterGui.Operator.MainUI.Tabs.Tab-Copy.COPY-PLACEID.placeid-script
