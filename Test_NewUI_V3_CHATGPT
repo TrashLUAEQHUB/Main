@@ -1,15 +1,18 @@
 local player = game.Players.LocalPlayer
+local userInputService = game:GetService("UserInputService")
+
 local gui = Instance.new("ScreenGui")
 gui.Parent = player:WaitForChild("PlayerGui")
 gui.ResetOnSpawn = false
 
--- Main UI Frame
+-- Main Frame (UI)
 local frame = Instance.new("Frame")
 frame.Parent = gui
-frame.Size = UDim2.new(0, 400, 0, 250)
-frame.Position = UDim2.new(0.5, -200, 0.5, -125)
+frame.Size = UDim2.new(0, 500, 0, 200)  -- Wider but balanced
+frame.Position = UDim2.new(0.5, -250, 0.5, -100)  -- Centered
 frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 frame.BorderSizePixel = 0
+frame.Active = true
 
 local frameCorner = Instance.new("UICorner")
 frameCorner.CornerRadius = UDim.new(0, 10)
@@ -24,6 +27,36 @@ title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamBold
 title.Text = "Example"
 title.TextScaled = true
+
+-- Dragging Function with Transparency Effect
+local dragging, dragInput, dragStart, startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = frame.Position
+        frame.BackgroundTransparency = 0.3  -- Semi-transparent while dragging
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+                frame.BackgroundTransparency = 0  -- Reset transparency after drag
+            end
+        end)
+    end
+end)
+
+userInputService.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
+        update(input)
+    end
+end)
 
 -- Left Tab Button
 local tabButton = Instance.new("TextButton")
@@ -93,20 +126,10 @@ sliderText.Font = Enum.Font.GothamBold
 sliderText.TextScaled = true
 sliderText.BackgroundTransparency = 1
 
-local sliderValue = Instance.new("TextLabel")
-sliderValue.Parent = sliderContainer
-sliderValue.Size = UDim2.new(0.2, 0, 1, 0)
-sliderValue.Position = UDim2.new(0.3, 0, 0, 0)
-sliderValue.Text = "200"
-sliderValue.TextColor3 = Color3.fromRGB(255, 255, 255)
-sliderValue.Font = Enum.Font.GothamBold
-sliderValue.TextScaled = true
-sliderValue.BackgroundTransparency = 1
-
 local slider = Instance.new("Frame")
 slider.Parent = sliderContainer
-slider.Size = UDim2.new(0.4, 0, 0.5, 0)
-slider.Position = UDim2.new(0.55, 0, 0.25, 0)
+slider.Size = UDim2.new(0.6, 0, 0.5, 0)
+slider.Position = UDim2.new(0.35, 0, 0.25, 0)
 slider.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
 
 local sliderFill = Instance.new("Frame")
@@ -121,15 +144,14 @@ slider.InputBegan:Connect(function(input)
     end
 end)
 
-game:GetService("UserInputService").InputChanged:Connect(function(input)
+userInputService.InputChanged:Connect(function(input)
     if sliderDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
         local newPos = math.clamp(input.Position.X - slider.AbsolutePosition.X, 0, slider.AbsoluteSize.X)
         sliderFill.Size = UDim2.new(0, newPos, 1, 0)
-        sliderValue.Text = tostring(math.floor((newPos / slider.AbsoluteSize.X) * 200))
     end
 end)
 
-game:GetService("UserInputService").InputEnded:Connect(function(input)
+userInputService.InputEnded:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
         sliderDragging = false
     end
@@ -151,31 +173,3 @@ button.MouseButton1Click:Connect(function()
     wait(0.2)
     button.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 end)
-
--- Draggable Function
-local function makeDraggable(ui)
-    local userInputService = game:GetService("UserInputService")
-    local dragging, dragStart, startPos
-
-    ui.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = true
-            dragStart = input.Position
-            startPos = ui.Position
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    userInputService.InputChanged:Connect(function(input)
-        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            local delta = input.Position - dragStart
-            ui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-        end
-    end)
-end
-
-makeDraggable(frame)
