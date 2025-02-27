@@ -3,172 +3,160 @@ local gui = Instance.new("ScreenGui")
 gui.Parent = player:WaitForChild("PlayerGui")
 gui.ResetOnSpawn = false
 
+-- Main UI Frame
 local frame = Instance.new("Frame")
 frame.Parent = gui
-frame.Size = UDim2.new(0, 300, 0, 250)
-frame.Position = UDim2.new(0.5, -150, 0.5, -125)
-frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-frame.BackgroundTransparency = 0
+frame.Size = UDim2.new(0, 400, 0, 250)
+frame.Position = UDim2.new(0.5, -200, 0.5, -125)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 frame.BorderSizePixel = 0
 
-local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(0, 10)
-corner.Parent = frame
+local frameCorner = Instance.new("UICorner")
+frameCorner.CornerRadius = UDim.new(0, 10)
+frameCorner.Parent = frame
 
+-- Title Bar
 local title = Instance.new("TextLabel")
 title.Parent = frame
 title.Size = UDim2.new(1, 0, 0, 30)
-title.Position = UDim2.new(0, 0, 0, 0)
-title.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+title.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.TextScaled = true
 title.Font = Enum.Font.GothamBold
-title.Text = "Cool UI"
+title.Text = "Example"
+title.TextScaled = true
 
-local button = Instance.new("TextButton")
-button.Parent = frame
-button.Size = UDim2.new(0, 120, 0, 40)
-button.Position = UDim2.new(0.5, -60, 0.2, 0)
-button.BackgroundColor3 = Color3.fromRGB(30, 144, 255)
-button.TextColor3 = Color3.fromRGB(255, 255, 255)
-button.TextScaled = true
-button.Font = Enum.Font.GothamBold
-button.Text = "Click Me!"
+-- Left Tab Button
+local tabButton = Instance.new("TextButton")
+tabButton.Parent = frame
+tabButton.Size = UDim2.new(0, 80, 0, 40)
+tabButton.Position = UDim2.new(0, -80, 0, 30)
+tabButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+tabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+tabButton.Font = Enum.Font.GothamBold
+tabButton.Text = "Tab 1"
 
-local buttonCorner = Instance.new("UICorner")
-buttonCorner.CornerRadius = UDim.new(0, 8)
-buttonCorner.Parent = button
+local tabButtonCorner = Instance.new("UICorner")
+tabButtonCorner.CornerRadius = UDim.new(0, 5)
+tabButtonCorner.Parent = tabButton
 
-button.MouseButton1Click:Connect(function()
-    button.BackgroundColor3 = Color3.fromRGB(25, 118, 210)
-    button.Text = "Clicked!"
-    wait(0.2)
-    button.BackgroundColor3 = Color3.fromRGB(30, 144, 255)
-    button.Text = "Click Me!"
-end)
+-- Toggle Button
+local toggleContainer = Instance.new("Frame")
+toggleContainer.Parent = frame
+toggleContainer.Size = UDim2.new(0.9, 0, 0, 40)
+toggleContainer.Position = UDim2.new(0.05, 0, 0.3, 0)
+toggleContainer.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 
-local toggle = Instance.new("TextButton")
-toggle.Parent = frame
-toggle.Size = UDim2.new(0, 120, 0, 40)
-toggle.Position = UDim2.new(0.5, -60, 0.4, 0)
-toggle.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-toggle.TextScaled = true
-toggle.Font = Enum.Font.GothamBold
-toggle.Text = "OFF"
+local toggleText = Instance.new("TextLabel")
+toggleText.Parent = toggleContainer
+toggleText.Size = UDim2.new(0.5, 0, 1, 0)
+toggleText.Text = "Toggle"
+toggleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleText.Font = Enum.Font.GothamBold
+toggleText.TextScaled = true
+toggleText.BackgroundTransparency = 1
+
+local toggleButton = Instance.new("TextButton")
+toggleButton.Parent = toggleContainer
+toggleButton.Size = UDim2.new(0.4, 0, 0.8, 0)
+toggleButton.Position = UDim2.new(0.55, 0, 0.1, 0)
+toggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+toggleButton.Text = ""
+toggleButton.AutoButtonColor = false
 
 local toggleCorner = Instance.new("UICorner")
-toggleCorner.CornerRadius = UDim.new(0, 8)
-toggleCorner.Parent = toggle
+toggleCorner.CornerRadius = UDim.new(1, 0)
+toggleCorner.Parent = toggleButton
 
 local toggled = false
-toggle.MouseButton1Click:Connect(function()
+toggleButton.MouseButton1Click:Connect(function()
     toggled = not toggled
     if toggled then
-        toggle.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
-        toggle.Text = "ON"
+        toggleButton.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
     else
-        toggle.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-        toggle.Text = "OFF"
+        toggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
     end
 end)
 
-local dropdown = Instance.new("TextButton")
-dropdown.Parent = frame
-dropdown.Size = UDim2.new(0, 120, 0, 40)
-dropdown.Position = UDim2.new(0.5, -60, 0.6, 0)
-dropdown.BackgroundColor3 = Color3.fromRGB(50, 50, 200)
-dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
-dropdown.TextScaled = true
-dropdown.Font = Enum.Font.GothamBold
-dropdown.Text = "Select"
+-- Slider
+local sliderContainer = Instance.new("Frame")
+sliderContainer.Parent = frame
+sliderContainer.Size = UDim2.new(0.9, 0, 0, 40)
+sliderContainer.Position = UDim2.new(0.05, 0, 0.5, 0)
+sliderContainer.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 
-local dropdownCorner = Instance.new("UICorner")
-dropdownCorner.CornerRadius = UDim.new(0, 8)
-dropdownCorner.Parent = dropdown
+local sliderText = Instance.new("TextLabel")
+sliderText.Parent = sliderContainer
+sliderText.Size = UDim2.new(0.3, 0, 1, 0)
+sliderText.Text = "Slide"
+sliderText.TextColor3 = Color3.fromRGB(255, 255, 255)
+sliderText.Font = Enum.Font.GothamBold
+sliderText.TextScaled = true
+sliderText.BackgroundTransparency = 1
 
-local option1 = Instance.new("TextButton")
-option1.Parent = dropdown
-option1.Size = UDim2.new(1, 0, 0, 30)
-option1.Position = UDim2.new(0, 0, 1, 0)
-option1.BackgroundColor3 = Color3.fromRGB(80, 80, 255)
-option1.TextColor3 = Color3.fromRGB(255, 255, 255)
-option1.Text = "Option 1"
-option1.Visible = false
-
-local option2 = Instance.new("TextButton")
-option2.Parent = dropdown
-option2.Size = UDim2.new(1, 0, 0, 30)
-option2.Position = UDim2.new(0, 0, 1.5, 0)
-option2.BackgroundColor3 = Color3.fromRGB(80, 80, 255)
-option2.TextColor3 = Color3.fromRGB(255, 255, 255)
-option2.Text = "Option 2"
-option2.Visible = false
-
-local dropdownOpen = false
-dropdown.MouseButton1Click:Connect(function()
-    dropdownOpen = not dropdownOpen
-    option1.Visible = dropdownOpen
-    option2.Visible = dropdownOpen
-end)
-
-option1.MouseButton1Click:Connect(function()
-    dropdown.Text = "Option 1"
-    dropdownOpen = false
-    option1.Visible = false
-    option2.Visible = false
-end)
-
-option2.MouseButton1Click:Connect(function()
-    dropdown.Text = "Option 2"
-    dropdownOpen = false
-    option1.Visible = false
-    option2.Visible = false
-end)
+local sliderValue = Instance.new("TextLabel")
+sliderValue.Parent = sliderContainer
+sliderValue.Size = UDim2.new(0.2, 0, 1, 0)
+sliderValue.Position = UDim2.new(0.3, 0, 0, 0)
+sliderValue.Text = "200"
+sliderValue.TextColor3 = Color3.fromRGB(255, 255, 255)
+sliderValue.Font = Enum.Font.GothamBold
+sliderValue.TextScaled = true
+sliderValue.BackgroundTransparency = 1
 
 local slider = Instance.new("Frame")
-slider.Parent = frame
-slider.Size = UDim2.new(0, 120, 0, 10)
-slider.Position = UDim2.new(0.5, -60, 0.8, 0)
+slider.Parent = sliderContainer
+slider.Size = UDim2.new(0.4, 0, 0.5, 0)
+slider.Position = UDim2.new(0.55, 0, 0.25, 0)
 slider.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
 
-local sliderCorner = Instance.new("UICorner")
-sliderCorner.CornerRadius = UDim.new(0, 5)
-sliderCorner.Parent = slider
+local sliderFill = Instance.new("Frame")
+sliderFill.Parent = slider
+sliderFill.Size = UDim2.new(0.5, 0, 1, 0)
+sliderFill.BackgroundColor3 = Color3.fromRGB(150, 150, 150)
 
-local sliderButton = Instance.new("Frame")
-sliderButton.Parent = slider
-sliderButton.Size = UDim2.new(0, 20, 1, 0)
-sliderButton.Position = UDim2.new(0, 0, 0, 0)
-sliderButton.BackgroundColor3 = Color3.fromRGB(30, 144, 255)
-
-local sliderButtonCorner = Instance.new("UICorner")
-sliderButtonCorner.CornerRadius = UDim.new(0, 5)
-sliderButtonCorner.Parent = sliderButton
-
-local dragging = false
-sliderButton.InputBegan:Connect(function(input)
+local sliderDragging = false
+slider.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = true
+        sliderDragging = true
     end
 end)
 
 game:GetService("UserInputService").InputChanged:Connect(function(input)
-    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-        local pos = math.clamp(input.Position.X - slider.AbsolutePosition.X, 0, slider.AbsoluteSize.X - sliderButton.AbsoluteSize.X)
-        sliderButton.Position = UDim2.new(0, pos, 0, 0)
+    if sliderDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local newPos = math.clamp(input.Position.X - slider.AbsolutePosition.X, 0, slider.AbsoluteSize.X)
+        sliderFill.Size = UDim2.new(0, newPos, 1, 0)
+        sliderValue.Text = tostring(math.floor((newPos / slider.AbsoluteSize.X) * 200))
     end
 end)
 
 game:GetService("UserInputService").InputEnded:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = false
+        sliderDragging = false
     end
 end)
 
+-- Button
+local button = Instance.new("TextButton")
+button.Parent = frame
+button.Size = UDim2.new(0.9, 0, 0, 40)
+button.Position = UDim2.new(0.05, 0, 0.7, 0)
+button.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.Font = Enum.Font.GothamBold
+button.Text = "Button"
+button.TextScaled = true
+
+button.MouseButton1Click:Connect(function()
+    button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    wait(0.2)
+    button.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+end)
+
+-- Draggable Function
 local function makeDraggable(ui)
     local userInputService = game:GetService("UserInputService")
-    local dragging, dragInput, dragStart, startPos
+    local dragging, dragStart, startPos
+
     ui.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 then
             dragging = true
@@ -181,6 +169,7 @@ local function makeDraggable(ui)
             end)
         end
     end)
+
     userInputService.InputChanged:Connect(function(input)
         if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
             local delta = input.Position - dragStart
