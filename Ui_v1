@@ -1,0 +1,159 @@
+local Library = {}
+
+function Library:createWindow(title, theme)
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0, 300, 0, 250)
+    frame.Position = UDim2.new(0.5, -150, 0.5, -125)
+    frame.BackgroundColor3 = theme == "DarkTheme" and Color3.fromRGB(30, 30, 30) or Color3.fromRGB(200, 200, 200)
+    frame.Parent = screenGui
+
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Size = UDim2.new(1, 0, 0, 30)
+    titleLabel.Text = title
+    titleLabel.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.Parent = frame
+
+    local tabsHolder = Instance.new("Frame")
+    tabsHolder.Size = UDim2.new(1, 0, 0, 30)
+    tabsHolder.Position = UDim2.new(0, 0, 0, 30)
+    tabsHolder.BackgroundTransparency = 1
+    tabsHolder.Parent = frame
+
+    local contentHolder = Instance.new("Frame")
+    contentHolder.Size = UDim2.new(1, 0, 1, -60)
+    contentHolder.Position = UDim2.new(0, 0, 0, 60)
+    contentHolder.BackgroundTransparency = 1
+    contentHolder.Parent = frame
+
+    local window = {
+        frame = frame,
+        tabsHolder = tabsHolder,
+        contentHolder = contentHolder,
+        tabs = {},
+    }
+
+    function window:createTab(tabName)
+        local button = Instance.new("TextButton")
+        button.Size = UDim2.new(0, 100, 1, 0)
+        button.Text = tabName
+        button.Parent = tabsHolder
+
+        local tabContent = Instance.new("Frame")
+        tabContent.Size = UDim2.new(1, 0, 1, 0)
+        tabContent.BackgroundTransparency = 1
+        tabContent.Visible = #window.tabs == 0
+        tabContent.Parent = contentHolder
+
+        window.tabs[tabName] = tabContent
+
+        button.MouseButton1Click:Connect(function()
+            for _, tab in pairs(window.tabs) do
+                tab.Visible = false
+            end
+            tabContent.Visible = true
+        end)
+
+        local tab = {
+            frame = tabContent
+        }
+
+        function tab:createButton(text, callback)
+            local btn = Instance.new("TextButton")
+            btn.Size = UDim2.new(1, 0, 0, 30)
+            btn.Text = text
+            btn.Parent = tabContent
+            btn.MouseButton1Click:Connect(callback)
+        end
+
+        function tab:createToggle(text, callback)
+            local toggle = Instance.new("TextButton")
+            toggle.Size = UDim2.new(1, 0, 0, 30)
+            toggle.Text = text .. ": OFF"
+            toggle.Parent = tabContent
+            local state = false
+
+            toggle.MouseButton1Click:Connect(function()
+                state = not state
+                toggle.Text = text .. ": " .. (state and "ON" or "OFF")
+                callback(state)
+            end)
+        end
+
+        function tab:createSlider(text, min, max, callback)
+            local frame = Instance.new("Frame")
+            frame.Size = UDim2.new(1, 0, 0, 30)
+            frame.Parent = tabContent
+
+            local label = Instance.new("TextLabel")
+            label.Size = UDim2.new(0.3, 0, 1, 0)
+            label.Text = text
+            label.Parent = frame
+
+            local slider = Instance.new("TextButton")
+            slider.Size = UDim2.new(0.7, 0, 1, 0)
+            slider.Position = UDim2.new(0.3, 0, 0, 0)
+            slider.Text = tostring(min)
+            slider.Parent = frame
+
+            local dragging = false
+            slider.MouseButton1Down:Connect(function()
+                dragging = true
+            end)
+            game:GetService("UserInputService").InputEnded:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    dragging = false
+                end
+            end)
+            slider.MouseMoved:Connect(function(x)
+                if dragging then
+                    local percent = math.clamp((x - slider.AbsolutePosition.X) / slider.AbsoluteSize.X, 0, 1)
+                    local value = math.floor(min + (max - min) * percent)
+                    slider.Text = tostring(value)
+                    callback(value)
+                end
+            end)
+        end
+
+        function tab:createDropdown(text, options, callback)
+            local dropdown = Instance.new("TextButton")
+            dropdown.Size = UDim2.new(1, 0, 0, 30)
+            dropdown.Text = text .. ": " .. options[1]
+            dropdown.Parent = tabContent
+
+            local open = false
+            local dropdownFrame = Instance.new("Frame")
+            dropdownFrame.Size = UDim2.new(1, 0, 0, 30 * #options)
+            dropdownFrame.Visible = false
+            dropdownFrame.Parent = dropdown
+
+            for _, option in ipairs(options) do
+                local optionButton = Instance.new("TextButton")
+                optionButton.Size = UDim2.new(1, 0, 0, 30)
+                optionButton.Text = option
+                optionButton.Parent = dropdownFrame
+
+                optionButton.MouseButton1Click:Connect(function()
+                    dropdown.Text = text .. ": " .. option
+                    dropdownFrame.Visible = false
+                    open = false
+                    callback(option)
+                end)
+            end
+
+            dropdown.MouseButton1Click:Connect(function()
+                open = not open
+                dropdownFrame.Visible = open
+            end)
+        end
+
+        return tab
+    end
+
+    return window
+end
+
+return Library
